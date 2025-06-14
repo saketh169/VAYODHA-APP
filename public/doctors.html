@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Doctors - Vayodha Healthcare</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS - Load after Bootstrap -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .brand-text {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+        }
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            color: #3184A8;
+        }
+        .brand-tagline {
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        /* Role Selection Styles */
+        .role-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .role-card .card {
+            transition: all 0.3s ease;
+        }
+        
+        .role-card:hover .card {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        
+        .role-card .fa-2x {
+            color: #3184A8;
+        }
+        
+        .back-to-roles {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #3184A8;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .back-to-roles:hover {
+            color: #256785;
+        }
+
+        /* Navigation styles */
+        .navbar-nav {
+            align-items: center;
+        }
+        
+        .navbar-nav .nav-item {
+            margin-left: 10px;
+        }
+        
+        .navbar-nav .nav-link.btn {
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 8px 20px !important;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Search bar styles */
+        .search-wrapper {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .search-wrapper .form-control {
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+        }
+
+        .search-wrapper .form-control:focus {
+            box-shadow: none;
+        }
+
+        .search-wrapper .btn {
+            padding: 0 25px;
+        }
+
+        .search-wrapper .btn:hover {
+            background-color: #2a7394 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/images/logo.svg" alt="Vayodha Logo" class="me-2" style="height: 40px;">
+                <div class="brand-text">
+                    <span class="brand-name">VAYODHA</span>
+                    <span class="brand-tagline">HEALING WITH CARE AND WELLNESS WITH WARMTH</span>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/doctors.html">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/e-pharmacy.html">E-Pharmacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/appointments.html">My Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/patient-dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <span class="nav-link fw-bold" id="welcomeText">Welcome, Guest</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-4" href="javascript:void(0)" onclick="showLoginModal(); return false;">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <div class="container-fluid bg-light py-4" style="margin-top: 80px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h4 class="text-center mb-4">Find the Right Doctor</h4>
+                    <div class="search-wrapper">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" id="doctorSearch" placeholder="Search by doctor name, specialization, or hospital...">
+                            <button class="btn px-4" type="button" style="background-color: #3184A8; color: white;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Filters Column -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Filters</h5>
+                        <form id="filterForm">
+                            <div class="mb-3">
+                                <label class="form-label">Specialization</label>
+                                <select class="form-select" id="specialization">
+                                    <option value="">All Specializations</option>
+                                    <option value="Cardiologist">Cardiologist</option>
+                                    <option value="Dermatologist">Dermatologist</option>
+                                    <option value="Pediatrician">Pediatrician</option>
+                                    <option value="Neurologist">Neurologist</option>
+                                    <option value="Psychiatrist">Psychiatrist</option>
+                                    <option value="Orthopedic">Orthopedic</option>
+                                    <option value="Gynecologist">Gynecologist</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Hospital</label>
+                                <select class="form-select" id="hospital">
+                                    <option value="">All Hospitals</option>
+                                    <option value="Vayodha Main Hospital">Vayodha Main Hospital</option>
+                                    <option value="Vayodha City Clinic">Vayodha City Clinic</option>
+                                    <option value="Vayodha West Branch">Vayodha West Branch</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Availability</label>
+                                <select class="form-select" id="availability">
+                                    <option value="">Any Availability</option>
+                                    <option value="today">Available Today</option>
+                                    <option value="tomorrow">Available Tomorrow</option>
+                                    <option value="this_week">Available This Week</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Consultation Type</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inPersonConsult" checked>
+                                    <label class="form-check-label">In-Person Consultation</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="videoConsult">
+                                    <label class="form-check-label">Video Consultation</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Consultation Fee</label>
+                                <select class="form-select" id="feeRange">
+                                    <option value="">Any Fee Range</option>
+                                    <option value="0-500">Under ₹500</option>
+                                    <option value="500-1000">₹500 - ₹1000</option>
+                                    <option value="1000+">Above ₹1000</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn w-100" style="background-color: #3184A8; color: white;">Apply Filters</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="doctorsList" class="row g-4">
+                    <!-- Doctors will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="modal fade" id="appointmentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Book Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="appointmentForm">
+                        <input type="hidden" id="doctorId">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Appointment Date</label>
+                                <input type="date" class="form-control" id="appointmentDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Time Slot</label>
+                                <select class="form-select" id="timeSlot" required>
+                                    <option value="">Select a time slot</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Consultation Type</label>
+                            <select class="form-select" id="consultationType" required>
+                                <option value="in-person">In-Person Visit</option>
+                                <option value="video">Video Consultation</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Symptoms</label>
+                            <textarea class="form-control" id="symptoms" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Medical History (Optional)</label>
+                            <textarea class="form-control" id="medicalHistory" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome to Vayodha</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Role Selection -->
+                    <div id="roleSelection" class="mb-4">
+                        <h6 class="mb-3">Please select your role:</h6>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="role-card" data-role="patient">
+                                    <div class="card h-100 border-0 shadow-sm text-center p-3 cursor-pointer">
+                                        <i class="fas fa-user fa-2x mb-2 text-primary"></i>
+                                        <h6 class="mb-0">Patient</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="role-card" data-role="doctor">
+                                    <div class="card h-100 border-0 shadow-sm text-center p-3 cursor-pointer">
+                                        <i class="fas fa-user-md fa-2x mb-2 text-primary"></i>
+                                        <h6 class="mb-0">Doctor</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="role-card" data-role="hospital">
+                                    <div class="card h-100 border-0 shadow-sm text-center p-3 cursor-pointer">
+                                        <i class="fas fa-hospital fa-2x mb-2 text-primary"></i>
+                                        <h6 class="mb-0">Hospital Management</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="role-card" data-role="admin">
+                                    <div class="card h-100 border-0 shadow-sm text-center p-3 cursor-pointer">
+                                        <i class="fas fa-shield-alt fa-2x mb-2 text-primary"></i>
+                                        <h6 class="mb-0">Admin</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auth Forms -->
+                    <div id="authForms" class="d-none">
+                        <ul class="nav nav-tabs mb-3" id="authTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab">Login</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab">Register</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="authTabsContent">
+                            <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" tabindex="0">
+                                <form id="loginForm">
+                                    <input type="hidden" id="loginRole" name="role" value="">
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" tabindex="0">
+                                <form id="registerForm">
+                                    <input type="hidden" id="registerRole" name="role" value="">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="password" required minlength="6">
+                                    </div>
+                                    
+                                    <!-- Doctor-specific fields -->
+                                    <div id="doctorFields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label class="form-label">Specialization</label>
+                                            <select class="form-control" name="specialization" required>
+                                                <option value="">Select Specialization</option>
+                                                <option value="Cardiologist">Cardiologist</option>
+                                                <option value="Dermatologist">Dermatologist</option>
+                                                <option value="Gynecologist">Gynecologist</option>
+                                                <option value="Neurologist">Neurologist</option>
+                                                <option value="Orthopedic">Orthopedic</option>
+                                                <option value="Pediatrician">Pediatrician</option>
+                                                <option value="Psychiatrist">Psychiatrist</option>
+                                                <option value="General Physician">General Physician</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Qualification</label>
+                                            <input type="text" class="form-control" name="qualification" placeholder="e.g., MBBS, MD" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Years of Experience</label>
+                                            <input type="number" class="form-control" name="experience" min="0" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Consultation Fee (₹)</label>
+                                            <input type="number" class="form-control" name="consultationFee" min="0" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">About</label>
+                                            <textarea class="form-control" name="about" rows="3" placeholder="Brief description about your practice" required></textarea>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" name="isAvailableForVideoConsult" id="videoConsult">
+                                            <label class="form-check-label" for="videoConsult">Available for Video Consultation</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Load auth-modal.js first since it contains the showLoginModal function -->
+    <script src="js/auth-modal.js"></script>
+    <!-- Then load other scripts that might depend on auth-modal.js -->
+    <script src="js/nav.js"></script>
+    <script src="js/doctors.js"></script>
+
+    <script>
+        // Ensure the modal is properly initialized
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the login modal
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            
+            // Make sure the showLoginModal function is properly bound to window
+            if (!window.showLoginModal) {
+                window.showLoginModal = function() {
+                    const loginForm = document.getElementById('loginForm');
+                    const registerForm = document.getElementById('registerForm');
+                    const roleSelection = document.getElementById('roleSelection');
+                    const authForms = document.getElementById('authForms');
+                    const doctorFields = document.getElementById('doctorFields');
+                    
+                    // Reset forms and show role selection
+                    if (loginForm) loginForm.reset();
+                    if (registerForm) registerForm.reset();
+                    if (roleSelection) roleSelection.classList.remove('d-none');
+                    if (authForms) authForms.classList.add('d-none');
+                    if (doctorFields) doctorFields.style.display = 'none';
+                    
+                    // Remove any existing back button
+                    const existingBackButton = document.querySelector('.back-to-roles');
+                    if (existingBackButton) existingBackButton.remove();
+                    
+                    loginModal.show();
+                };
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <g transform="translate(100, 50)">
+    <!-- Heart with ECG line -->
+    <path d="M150,0 
+             C100,0 50,50 50,100
+             C50,150 100,200 150,200
+             C200,200 250,150 250,100
+             C250,50 200,0 150,0
+             Z" 
+          fill="none" 
+          stroke="#000" 
+          stroke-width="8"/>
+    <path d="M75,100 L125,100 L140,70 L155,130 L170,100 L225,100" 
+          fill="none" 
+          stroke="#000" 
+          stroke-width="8"/>
+    
+    <!-- Arrow -->
+    <path d="M150,180 L150,250" 
+          fill="none" 
+          stroke="#000" 
+          stroke-width="8"/>
+    <path d="M120,220 L150,250 L180,220" 
+          fill="none" 
+          stroke="#000" 
+          stroke-width="8"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="250" y="350" 
+        text-anchor="middle" 
+        font-family="Arial" 
+        font-size="48" 
+        font-weight="bold">VAYODHA</text>
+</svg> 

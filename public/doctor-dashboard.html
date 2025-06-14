@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Vayodha</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="text-primary fw-bold">Vayodha</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link" id="doctorName"></span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-danger" id="logoutBtn">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Dashboard Menu</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#appointments" data-bs-toggle="tab">
+                                    <i class="fas fa-calendar-check me-2"></i>Appointments
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#schedule" data-bs-toggle="tab">
+                                    <i class="fas fa-clock me-2"></i>Schedule
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#patients" data-bs-toggle="tab">
+                                    <i class="fas fa-users me-2"></i>Patients
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#profile" data-bs-toggle="tab">
+                                    <i class="fas fa-user-md me-2"></i>Profile
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <div class="tab-content">
+                    <!-- Appointments Tab -->
+                    <div class="tab-pane fade show active" id="appointments">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Today's Appointments</h5>
+                                <div class="table-responsive">
+                                    <table class="table" id="appointmentsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Time</th>
+                                                <th>Patient Name</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Appointments will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schedule Tab -->
+                    <div class="tab-pane fade" id="schedule">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">My Schedule</h5>
+                                <div id="scheduleContent">
+                                    <!-- Schedule content will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Patients Tab -->
+                    <div class="tab-pane fade" id="patients">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">My Patients</h5>
+                                <div class="table-responsive">
+                                    <table class="table" id="patientsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Last Visit</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Patients will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Tab -->
+                    <div class="tab-pane fade" id="profile">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">My Profile</h5>
+                                <form id="profileForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="fullName" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Specialization</label>
+                                        <input type="text" class="form-control" id="specialization" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" class="form-control" id="experience" readonly>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/doctor-dashboard.js"></script>
+</body>
+</html> 
